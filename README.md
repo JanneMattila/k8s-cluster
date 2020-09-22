@@ -8,7 +8,10 @@ functionalities into your Azure Kubernetes Service.
 In folder [cluster-with-aad-auth](cluster-with-aad-auth)
 there is example how to setup following architecture:
 
-![image](https://user-images.githubusercontent.com/2357647/93858338-a7f71980-fcc4-11ea-84ba-d90b23d81cf0.png)
+![architecture](https://user-images.githubusercontent.com/2357647/93898843-5bc7cb80-fcfc-11ea-8b97-66ade06d3bc3.png)
 
 Architecture is based on [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)
 which is configured to work with Azure AD for providing authentication to the end users.
+
+You can use either external Redis cache like [Azure Cache for Redis](https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview) or then use
+redis directly inside from your cluster.
