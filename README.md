@@ -9,7 +9,7 @@ If you need to protect your test cluster or you just want
 to protect access to your apps from central location, you
 can use following architecture from folder [cluster-with-aad-auth](cluster-with-aad-auth):
 
-![architecture](https://user-images.githubusercontent.com/2357647/93898843-5bc7cb80-fcfc-11ea-8b97-66ade06d3bc3.png)
+![architecture](https://user-images.githubusercontent.com/2357647/93917360-9426d400-fd13-11ea-9085-4f447eafe483.png)
 
 Architecture is based on [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy)
 which is configured to work with Azure AD for providing authentication to the end users.
