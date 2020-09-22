@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+  namespace: platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:v6.1.1
+        args:
+        - --provider=azure
+        - --email-domain=*
+        - --upstream=file:///dev/null
+        - --http-address=0.0.0.0:4180
+        - --skip-provider-button=true
+        - --session-store-type=redis
+        - --redis-connection-url=redis://redis:6379
+        # Register a new application
+        # https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: 785aebd5-60ab-45e1-b326-f585d1c0bb75 # Your Azure AD App id from portal
+        - name: OAUTH2_PROXY_AZURE_TENANT
+          value: f8d2b3c5-09ea-44fb-94ee-adc53d8be410 # Your Azure AD tenant id
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: your_client_secret                   # Your Azure AD app client secret
+        # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: your_generated_cookie_secret
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
