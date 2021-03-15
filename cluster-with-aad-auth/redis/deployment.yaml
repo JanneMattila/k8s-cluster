@@ -33,8 +33,5 @@ spec:
           readOnly: false
       volumes:
       - name: data
-        azureFile:
-          secretName: redis-storage
-          shareName: redis
-          readOnly: false
-
+        persistentVolumeClaim:
+          claimName: redis-storage-pvc
